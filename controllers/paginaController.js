@@ -1,5 +1,5 @@
 import {Viaje} from "../models/Viajes.js";
-import { Testimonial } from "../models/testimoniales.js";
+import { Testimonial } from "../models/Testimoniales.js";
 
 const paginaInicio=async(req,res)=>{
     //Consultar 3 viajes del modelo viaje
@@ -45,6 +45,20 @@ console.log(viajes)
     
 }
 
+//Muestra un viaje por su slug
+const paginaDetalleViaje= async(req,res)=>{
+    const{slug}=req.params;
+    try {
+        const viaje=await Viaje.findOne({where: {slug}});
+        res.render('viaje',{
+            pagina:'Información Viaje',
+            viaje
+        });
+    } catch (error) {
+        console.log(error)
+    }
+};
+
 const paginaTestimoniales=async(req,res)=>{
 try {
     const testimoniales=await Testimonial.findAll();
@@ -59,19 +73,7 @@ try {
     
 }
 
-//Muestra un viaje por su slug
-const paginaDetalleViaje= async(req,res)=>{
-    const{slug}=req.params;
-    try {
-        const viaje=await Viaje.findOne({where: {slug}});
-        res.render('viaje',{
-            pagina:'Información Viaje',
-            viaje
-        });
-    } catch (error) {
-        console.log(error)
-    }
-};
+
 
 export{
     paginaInicio,
